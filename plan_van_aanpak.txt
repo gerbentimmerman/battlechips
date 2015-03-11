@@ -1,0 +1,41 @@
+Plan van aanpak 
+
+Teamnaam: Battlechips
+Teambazen: Gerben Timmerman, Richard Neyhoff, Pauline Schomaker
+
+Taakverdeling:
+
+- Gerben: Tegenstander/computer genereert random boten; AI 
+- Richard: Interface maken; Speelveld maken
+- Pauline: Boten kunnen neerzetten; Score bijhouden
+
+
+
+Opzet
+
+-speelveld
+-interactief
+-zakken chips ipv boten
+We beginnen met vijf boten, met verschillende lengtes. De computer genereert random boten en ‘schiet’ op random plaatsen. (later gaan we dit slimmer maken). 
+
+
+
+Planning:
+
+Basis:
+-Interface maken
+-Speelveld maken
+- Boten kunnen neerzetten
+- Score bijhouden
+- Tegenstander/computer genereert random boten.
+
+Als we de basis afhebben kunnen we verder met het uitbreiden van het programma.
+bv:
+Slimme tegenstander
+Groter speelveld, meer boten.
+
+
+
+github: https://github.com/paulineschomaker/battlechips.git
+
+
