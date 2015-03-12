@@ -1,0 +1,5 @@
+http://stackoverflow.com/questions/3504522/pyqt-get-pixel-position-and-value-when-mouse-click-on-the-image
+Muisklik in pyqt krijgen
+
+http://stackoverflow.com/questions/3522701/pyqt-get-pixel-position-and-value-when-mouse-click-on-the-image
+Antwoord kijken voor pixel image coordinaat
