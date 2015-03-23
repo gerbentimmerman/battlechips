@@ -14,7 +14,7 @@ class Battlechips(QtGui.QWidget):
 	while lijstSchepenComputer or lijstSchepenGebruiker != []:
 		
 		def randomShotComputer(self):
-			coord = (randrange(10), randrange(10))
+			coord = (randrange(10),randrange(10))
 			return coord
 		
 		def shotComputer(self):
@@ -59,6 +59,49 @@ class Battlechips(QtGui.QWidget):
 				gekozenCoordGebruiker()
 			return self.coordShot
 
+class SchepenKiezen(self):
+	# de lijst: self.lijstSchepenGebruiker moet in de init van de interface gemaakt
+	# worden.
+	def __init__(self):
+		schepenGebruiker1()
+		
+	def beginschip1(self):
+		self.begincoord1 = #input coord
+		return self.begincoord1
+		
+	def eindschip1(self):
+		self.eindcoord1 = #input coord + info over de lengte
+		self.lengte1 = 5
+		return self.eindcoord1, self.lengte1
+	
+	def schepenGebruiker1(self):
+		# er moet nog een combobox gemaakt worden genaamd self.horizonverticaalbox
+		# waarin de keuze tussen verticaal en horizontaal gemaakt moet worden.
+		counter = 0
+		self.begincoord = beginschip1()
+		x,y = self.begincoord[0], self.begincoord[1]
+		self.tussencoord = (x,y)
+		self.eindcoord1, lengte1 = eindschip1()
+		if self.horizonverticaalbox.currentText() == "Horizontaal":
+			while self.tussencoord != self.eindcoord1:
+				self.tussencoord = (x,y+1)
+				self.lijstSchepenGebruiker.append(self.tussencoord)
+				counter += 1
+		if self.horizonverticaalbox.currentText() == "Verticaal":
+			while self.tussencoord != self.eindcoord1:
+				self.tussencoord = (x+1,y)
+				self.lijstSchepenGebruiker.append(self.tussencoord)
+		if counter != lengte1:
+			self.lijstSchepenGebruiker = []
+			schepengebruiker1()
+		
+	def beginschip2(self):
+		self.begincoord2 = # input coord
+		self.lengte2 = 4
+		return self.begincoord2, self.lengte2
+		
+	def schepenComputer1(self)
+		#volgt morgen
 		
 def playField():
 	lijstcoords = []
