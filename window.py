@@ -1,14 +1,12 @@
 #!/usr/bin/python
-
 import sys
 from PyQt4 import QtGui
-from interface import Interface 
-
+from interface import Interface
 class Window(QtGui.QWidget):
 	def __init__(self):
 		super(Window, self).__init__()
 		self.initUI()
-		
+	
 	def initUI(self):
 		self.playButton = QtGui.QPushButton("Play", self)
 		self.playButton.clicked.connect(self.playField)
@@ -22,12 +20,11 @@ class Window(QtGui.QWidget):
 	def playField(self):
 		self.close()
 		self.interface = Interface()
-		
+
 def main():
 	app = QtGui.QApplication(sys.argv)
 	uni = Window()
 	sys.exit(app.exec_())
-	
+
 if __name__ == "__main__":
 	main()
-	
