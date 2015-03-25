@@ -1,7 +1,8 @@
 #!/usr/bin/python
 import sys
 from PyQt4 import QtGui
-from interface import Interface
+from board import Board
+
 class Window(QtGui.QWidget):
 	def __init__(self):
 		super(Window, self).__init__()
@@ -13,13 +14,13 @@ class Window(QtGui.QWidget):
 		self.playButton.move(150, 150)
 		self.playButton.resize(100, 20)
 		
-		self.setGeometry(100, 100, 800, 900)
+		self.setGeometry(150, 150, 600, 600)
 		self.setWindowTitle("Menu")
 		self.show()
 	
 	def playField(self):
 		self.close()
-		self.interface = Interface()
+		self.board = Board()
 
 def main():
 	app = QtGui.QApplication(sys.argv)

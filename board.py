@@ -2,12 +2,17 @@
 
 from PyQt4 import QtGui, QtCore
 import sys
+from test import Battlechips
+from schepenplaatsen import SchepenKiezen
 
 class Board(QtGui.QWidget):
     def __init__(self):
         super(Board, self).__init__()
+        self.lijstSchepenComputer = []
+        self.lijstSchepenGebruiker = []
         self.initUI()
-
+        self.schepenkiezen = SchepenKiezen()
+        self.battlechips = Battlechips(self.lijstSchepenComputer, self.lijstSchepenGebruiker)
     def initUI(self):
         self.setGeometry(150, 150, 600, 600)
         self.grid = QtGui.QGridLayout()
