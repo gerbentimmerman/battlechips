@@ -13,13 +13,25 @@ class Board(QtGui.QWidget):
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
 
-        self.coordslist = []
-
+		#Spelers veld
         for y in range(1, 11):
             for x in range(1, 11):
                 coord = (x, y)
-                self.coordslist = QtGui.QLabel(str(x) + str(y))
-                self.grid.addWidget(self.coordslist, x, y)
+                self.coordslist = QtGui.QLabel("(" + str(x) + "," + str(y) + ")")
+                self.grid.addWidget(self.coordslist, x+10, y+10)
+                
+		#Tegenstander
+        for y in range(1, 11):
+            for x in range(1, 11):
+                coord = (x, y)
+                self.computercoordslist = QtGui.QLabel("(" + str(x) + "," + str(y) + ")")
+                self.grid.addWidget(self.computercoordslist, x, y)
+		
+        #Combobox Horizontaal/Verticaal schip
+        self.horizonverticaalbox = QtGui.QComboBox()
+        self.horizonverticaalbox.addItem("Horizontaal")
+        self.horizonverticaalbox.addItem("Verticaal")
+        self.grid.addWidget(self.horizonverticaalbox, 5,0)
 
         self.show()
 
