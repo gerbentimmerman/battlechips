@@ -7,16 +7,19 @@ from PyQt4 import QtGui, QtCore
 from random import randrange
 
 class Battlechips(QtGui.QWidget):
-    def __init__(self):
+	def __init__(self):
 		super(Battlechips, self).__init__()
+		self.main()
+		
+	def main(self):
 		while self.lijstSchepenComputer or self.lijstSchepenGebruiker != []:
 			self.shotComputer()
 			self.schietenGebruiker()
-	
+			
 	def randomShotComputer(self):
 		coord = (randrange(10), randrange(10))
 		return coord
-			
+				
 	def shotComputer(self):
 		# De lijsten met Coordinaten moeten in de init gedefinieerd worden
 		# Zodat we ze hier aan een variabele kunnen toewijzen.
@@ -32,7 +35,7 @@ class Battlechips(QtGui.QWidget):
 			self.QMessageBox.Information(self, "Mis!!" , "Oef, de computer misde zijn schot!")
 			self.grid.addWidget(QtGui.QLabel("x"), coordrij, coordkolom)
 			# kleur gemist
-					
+						
 	def schietenGebruiker(self):
 		self.lijstSchepenComputer = []
 		self.coordShotGebruiker = gekozenCoordGebruiker()
