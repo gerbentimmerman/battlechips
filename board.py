@@ -11,8 +11,8 @@ class Board(QtGui.QWidget):
         self.lijstSchepenComputer = []
         self.lijstSchepenGebruiker = []
         self.initUI()
-        self.schepenkiezen = SchepenKiezen()
-        self.battlechips = Battlechips(self.lijstSchepenComputer, self.lijstSchepenGebruiker)
+        self.schepenkiezen = SchepenKiezen(self.lijstSchepenComputer, self.lijstSchepenGebruiker, self.horizonverticaalbox)
+        self.battlechips = Battlechips(self.lijstSchepenComputer, self.lijstSchepenGebruiker, self.horizonverticaalbox)
     def initUI(self):
         self.setGeometry(150, 150, 600, 600)
         self.grid = QtGui.QGridLayout()

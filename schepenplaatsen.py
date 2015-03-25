@@ -6,44 +6,51 @@ from PyQt4 import QtGui
 class SchepenKiezen(QtGui.QWidget):
 	# de lijst: self.lijstSchepenGebruiker moet in de init van de interface gemaakt
 	# worden.
-    def __init__(self):
+    def __init__(self, lijstschepencomputer, lijstschepengebruiker, combobox):
         super(SchepenKiezen, self).__init__()
+        self.lijstSchepenGebruiker = lijstschepengebruiker
+        self.lijstSchepenComputer = lijstschepencomputer
+        self.horizonverticaalbox = combobox
         self.schepenGebruiker()
         self.schepenComputer()
 
     def beginschip(self):
-        self.begincoord = QtGui.QInputDialog.getText(self,'Kies Begincoordinaat', 'Vul hier het begincoordinaat van het schip en bepaal of hij horizontaal of verticaal neergezet wordt.')
-        return self.begincoord
+        self.begin = QtGui.QInputDialog.getText(self,'Kies Begincoordinaat', 'Vul hier het begincoordinaat van het schip en bepaal \n of hij horizontaal of verticaal neergezet wordt.')
+        return self.begin
 		
     def eindschip(self, lengte):
 		self.lengte = lengte
-		self.eindcoord = QtGui.QInputDialog.getText(self,'Kies Eindcoordinaat', 'Vul hier het eindcoordinaat wat', 'coordinaten van het begincoordinaat afligt in.')
-		return self.eindcoord, self.lengte
+		self.eind = QtGui.QInputDialog.getText(self,'Kies Eindcoordinaat', 'Vul hier het eindcoordinaat wat' + str(self.lengte) + 'coordinaten van het begincoordinaat afligt in.')
+		return self.eind, self.lengte
 	
     def schepenGebruiker(self):
 		# lijst met daarin de lengtes van de schepen waar over je indenteert.
 		self.lijstlengtes = [2,3,3,4,5]
-		self.lijstSchepenGebruiker = []
 		for item in self.lijstlengtes:
 			self.begincoord = self.beginschip()
+			self.lijstSchepenGebruiker.append(self.begincoord)
 			self.eindcoord, lengte = self.eindschip(item)
 			counter = 0
 			x,y = self.begincoord[0], self.begincoord[1]
 			self.tussencoord = (x,y)
 			if self.horizonverticaalbox.currentText() == "Horizontaal":
 				while self.tussencoord != self.eindcoord:
-					self.tussencoord = (x,y+1)
+					x,y = self.tussencoord[0], self.tussencoord[1] + int(1)
+					self.tussencoord = (x,y)
 					self.lijstSchepenGebruiker.append(self.tussencoord)
 					counter += 1
+					print(self.lijstSchepenGebruiker)
 				self.lijstSchepenGebruiker.append(self.eindcoord)
 			if self.horizonverticaalbox.currentText() == "Verticaal":
 				while self.tussencoord != self.eindcoord:
-					self.tussencoord = (x+1,y)
+					x,y = self.tussencoord[0] + 1, self.tussencoord[1]
+					self.tussencoord = (x,y)
 					self.lijstSchepenGebruiker.append(self.tussencoord)
 					counter += 1
+				self.lijstSchepenGebruiker.append(self.eindcoord)
 			if counter != lengte:
 				self.lijstSchepenGebruiker = []
-				self.schepengebruiker()
+				self.schepenGebruiker()
 			"""# Aanpassen fout
 			if self.begincoord or self.tussencoord or self.eindcoord in self.lijstSchepenGebruiker:
 				self.lijstSchepenGebruiker = []
