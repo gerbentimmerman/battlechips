@@ -247,6 +247,7 @@ class Board(QtGui.QWidget):
 		return self.begincoord
 
 if __name__ == "__main__":
+	"""Runnen van Programma"""
     app = QtGui.QApplication(sys.argv)
     board = Board()
     board.show()
