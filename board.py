@@ -75,7 +75,6 @@ class Board(QtGui.QWidget):
 				self.close()
 				self.verloren = Windowverloren()
 
-	
 	def plaatsen(self):
 		"""Lengte van schip inlezen en meegeven aan de functie Schepenmaken"""
 		self.lengteschip = self.schepenlengtes[0]
