@@ -40,6 +40,8 @@ De functie shotComputer() genereert een random schot van de computer en kijkt of
 Dit gaat dus net zolang door totdat de lengte van een van de lijsten gelijk is aan 0, want je zit in een while loop. Als de lengte van de  lijst van de gebruiker gelijk is aan 0 sluit hij de interface af en opent hij het verliezersscherm met de melding dat je gewonnen hebt. Als de lengte van de lijst van de computer gelijk is aan 0, sluit hij de interface af en opent hij het winnaarscherm met de melding dat je gewonnen hebt.
 
 Notes:
+
+
 We hebben geen oplossing kunnen bedenken om de schepen van de gebruiker binnen de grid te houden. Het is helaas dus mogelijk om 10 9 in te vullen als coordinaat en dus voegt de functie dan de coordinaten (10,9),(10,10),(10,11) aan de lijst. Dus kan de computer nooit (10,11) raken. Dus wijzen we de gebruiker erop dat hij moet proberen een coordinaat te kiezen zodat het schip coordinaten van de grid meekrijgt en niet van buiten. Anders is dit valsspelen. We hebben ons best gedaan dit op te lossen, maar door tijdnood kwamen we hier niet meer uit.
 
 Daarbij kan het ook voorkomen dat er dubbele coordinaten in de lijst terrecht komen de schepen overlappen elkaar dan. Dit wilden we ook verhelpen, maar hier kwamen we ook niet meer uit in verband met tijdnood.
