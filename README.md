@@ -22,7 +22,7 @@ Veel plezier tijdens het spelen!
 
 Documentatie voor Programmeurs:
 
-Om het volledige programma uit te voeren heb je volgende bestanden nodig: window.py, board.py, gewonnen.py en verloren.py.
+Om het volledige programma uit te voeren heb je volgende bestanden nodig: window.py, board.py, gewonnen.py en verloren.py. En alle bijbehoordende plaatjes.
 Als je wilt beginnen moet je window.py uitvoeren. Je komt dan op het startscherm terecht. Wanneer je dan op play klikt verbind hij met de Board class en voert hij deze uit. Je krijgt dan eerst een melding op het scherm met daarin de speluitleg. 
 Het is daarna dus de bedoeling dat je schepen gaat plaatsen. Je moet dan eerst de richting van het schip kiezen in de combobox(horizontaal of verticaal) deze text leest hij later in de functie schepenGebruiker() in om te bepalen welk coordinaat hij een stapje opzij moet doen en ook moet toevoegen aan de lijst. 
 Als je de richting van het schip bepaald hebt, moet je op de button 'schipplaatsen' klikken. Nu komt er een inputvenster tevoorschijn waarin je het begincoordinaat van je schip moet invullen. Deze input neemt hij mee in de functie schepenGebruiker() waar het begincoordinaat dus is vastgesteld. Nu gaat hij voor dit coordinaat afhankelijk van de richting (horizontaal of verticaal) uit de combobox een stapje naar rechts of naar beneden. Een counter houdt bij hoevaak hij deze stapjes maakt. Als de counter gelijk is aan de lengte van het schip dan hoeft de functie geen coordinaten meer toe te voeren voor dat schip aan de lijst: self.lijstSchepenGebruiker.
