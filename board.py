@@ -35,7 +35,7 @@ class Board(QtGui.QWidget):
 				coord = (x, y)
 				self.computercoordslist = QtGui.QLabel("(" + str(x) + "," + str(y) + ")")
 				self.grid.addWidget(self.computercoordslist, x, y)
-				
+					
 		# Combobox voor keuze Horizontaal/Verticaal richting schip
 		self.horizonverticaalbox = QtGui.QComboBox()
 		self.horizonverticaalbox.addItem("Horizontaal")
@@ -54,6 +54,8 @@ class Board(QtGui.QWidget):
 		
 		self.show()
 		
+		QtGui.QMessageBox.information(self, "Spel Uitleg" , "Hallo, welkom bij Battlechips.\nZorg ervoor dat je eerst de richting van het schip bepaald in de combobox. Klik dan op plaats schepen knop en vul het begin coordinaat van het schip in om het schip te plaatsen. \nDe schepen worden in de volgende volgorde \ningevuld: 2,3,3,4,5. \nWees geen cheater en zorg ervoor dat de eindcoordinaten van de schepen binnen de grid blijven. Dus zorg als je coordinaten bij lengte 2 hebt minstens coordinaten van de kant zit.\nEr zijn 5 schepen als je die geplaatst heb kun je op het schietknopje klikken")
+
 	def main(self, lengtes):
 		""" Lijst van schepen maken en de lengtes van de schepen toewijzen"""
 		self.lijstSchepenGebruiker = []
@@ -81,6 +83,7 @@ class Board(QtGui.QWidget):
 		self.schepenlengtes.remove(self.schepenlengtes[0])
 		self.lijstSchepenGebruiker = self.schepenGebruiker(self.lengteschip, self.lijstSchepenGebruiker)
 		self.counter += 1
+		return self.lijstSchepenGebruiker
 		
 	def beginschip(self, lengte):
 		""" De gebruiker zijn begincoordinaat laten kiezen en returnen"""
@@ -112,22 +115,8 @@ class Board(QtGui.QWidget):
 			while self.countercoord != self.lengte:
 				y = self.tussencoord[1] + self.countercoord
 				self.tussencoord1 = (self.tussencoord[0],y)
-				if self.tussencoord1 in lijstSchepenGebruiker:
-					QtGui.QMessageBox.information(self, "Error" , "Je schepen overlopen elkaar voer opnieuw de coordinaten in")
-					self.schiplengtes = [2,3,3,4,5]
-					self.lijstSchepenGebruiker = self.plaatsen()
-				
-				#Controleren of coordinaat buiten het speelveld is
-				if self.tussencoord1[1] < 0 or self.tussencoord1[0] < 0:
-					QtGui.QMessageBox.information(self, "Error", "Je schip staat buiten het speelveld, voer opnieuw de coordinaten in")
-					self.schiplengtes = [2,3,3,4,5]
-					self.lijstSchepenGebruiker = self.plaatsen()
-				if self.tussencoord1[0] > 10 or self.tussencoord[1] > 10:
-					QtGui.QMessageBox.information(self, "Error", "Je schip staat buiten het speelveld, voer opnieuw de coordinaten in")
-					self.schiplengtes = [2,3,3,4,5]
-					self.lijstSchepenGebruiker = self.plaatsen()
-				
 				# Toevoegen aan de lijst
+				self.grid.addWidget(QtGui.QLabel("____"), self.tussencoord1[0] + 12, self.tussencoord1[1])
 				self.lijstSchepenGebruiker.append(self.tussencoord1)
 				self.countercoord += 1
 		
@@ -137,23 +126,7 @@ class Board(QtGui.QWidget):
 			while self.countercoord != self.lengte:
 				x = self.tussencoord[0] + self.countercoord
 				self.tussencoord1 = (x,self.tussencoord[1])
-				
-				#Controleren voor overlappende coordinaten
-				if self.tussencoord1 in lijstSchepenGebruiker:
-					QtGui.QMessageBox.information(self, "Error" , "Je schepen overlopen elkaar voer opnieuw de coordinaten in")
-					self.schiplengtes = [2,3,3,4,5]
-					self.lijstSchepenGebruiker = self.plaatsen()
-				
-				#Controleren of coordinaat buiten het speelveld is
-				if self.tussencoord1[1] < 1 or self.tussencoord1[0] < 1:
-					QtGui.QMessageBox.information(self, "Error", "Je schip staat buiten het speelveld, voer opnieuw de coordinaten in")
-					self.schiplengtes = [2,3,3,4,5]
-					self.lijstSchepenGebruiker = self.plaatsen()
-				if self.tussencoord1[0] > 10 or self.tussencoord[1] > 10:
-					QtGui.QMessageBox.information(self, "Error", "Je schip staat buiten het speelveld, voer opnieuw de coordinaten in")
-					self.schiplengtes = [2,3,3,4,5]
-					self.lijstSchepenGebruiker = self.plaatsen()
-				
+				self.grid.addWidget(QtGui.QLabel("____"), self.tussencoord1[0] + 12, self.tussencoord1[1])
 				# Toevoegen aan de lijst
 				self.lijstSchepenGebruiker.append(self.tussencoord1)
 				self.countercoord += 1
@@ -167,12 +140,13 @@ class Board(QtGui.QWidget):
 		lijstSchepenComputer = []
 		for item in self.lijstlengtes:
 			# random coord
-			self.begincoordcomputerschip = (randrange(1,11),randrange(1,11))
-			x,y = self.begincoordcomputerschip[0], self.begincoordcomputerschip[1]
 			counter = 0
 			hv = randrange(2)
 			# Horizontaal if
 			if hv == 0:
+				self.begincoordcomputerschip = (randrange(1,11),randrange(1,11 - item))
+				x,y = self.begincoordcomputerschip[0], self.begincoordcomputerschip[1]
+				# ycoord + 1 totdat hij gelijk is aan lengte schip 
 				while counter != item:
 					ycoord = y + counter
 					self.begincoordcomputerschip = (x,ycoord)
@@ -184,6 +158,9 @@ class Board(QtGui.QWidget):
 					counter += 1
 			# Verticaal if
 			if hv == 1:
+				self.begincoordcomputerschip = (randrange(1,11 - item ),randrange(1,11))
+				x,y = self.begincoordcomputerschip[0], self.begincoordcomputerschip[1]
+				# xcoord + 1 totdat hij gelijk is aan lengte schip 
 				while counter != item:
 					xcoord = x + counter
 					self.begincoordcomputerschip = (xcoord,y)
@@ -205,7 +182,6 @@ class Board(QtGui.QWidget):
 		""" Computer schiet op het speelveld van de Gebruiker"""
 		self.randomShot = self.randomShotComputer()
 		coordrij, coordkolom = self.randomShot[0], self.randomShot[1]
-		kleur = QtGui.QLabel()
 		if self.randomShot in self.lijstSchepenGebruiker:
 			QtGui.QMessageBox.information(self, "Hap!!" , "Ai, de computer heeft een hap van je chipje genomen!")
 			self.grid.addWidget(QtGui.QLabel("XXX"), coordrij+12, coordkolom)
@@ -227,6 +203,7 @@ class Board(QtGui.QWidget):
 		if self.coordShotGebruiker in self.lijstSchepenComputer:
 			QtGui.QMessageBox.information(self, "Hap!!" , "Yess, je hebt een hap van het chipje genomen!")
 			self.grid.addWidget(QtGui.QLabel("XXX"), coordrij, coordkolom)
+			self.grid.addWidget(QtGui.QLabel("____"), self.coordShotGebruiker[0], self.coordShotGebruiker[1])
 			# Haal coord uit de lijst als hij geraakt is
 			self.lijstSchepenComputer.remove(self.coordShotGebruiker)
 		
@@ -248,7 +225,7 @@ class Board(QtGui.QWidget):
 
 if __name__ == "__main__":
 	"""Runnen van Programma"""
-    app = QtGui.QApplication(sys.argv)
-    board = Board()
-    board.show()
-    sys.exit(app.exec_())
+	app = QtGui.QApplication(sys.argv)
+	board = Board()
+	board.show()
+	sys.exit(app.exec_())
