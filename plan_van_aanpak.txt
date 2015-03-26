@@ -5,9 +5,11 @@ Teambazen: Gerben Timmerman, Richard Neyhoff, Pauline Schomaker
 
 Taakverdeling:
 
-- Gerben: Tegenstander/computer genereert random boten; AI 
-- Richard: Interface maken; Speelveld maken
-- Pauline: Boten kunnen neerzetten; Score bijhouden
+We hebben met zijn 3en aan de volgende functies gewerkt:
+- Interface maken; Speelveld maken 
+- Boten kunnen neerzetten; Score bijhouden
+- Tegenstander/computer genereert random boten; AI 
+
 
 
 
