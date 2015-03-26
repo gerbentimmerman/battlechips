@@ -7,9 +7,8 @@ from random import randrange
 class Board(QtGui.QWidget):
 	def __init__(self):
 		super(Board, self).__init__()
+		self.counter = 0
 		self.initUI()
-		self.lijstSchepenGebruiker = self.schepenGebruiker()
-		self.lijstSchepenComputer = self.schepenComputer()
 		self.main()
 	
 	def initUI(self):
@@ -17,7 +16,7 @@ class Board(QtGui.QWidget):
 		self.grid = QtGui.QGridLayout()
 		self.setLayout(self.grid)
 		
-		#Spelers veld
+		# Speler veld maken
 		for y in range(1, 11):
 			 for x in range(1, 11):
 				 coord = (x, y)
@@ -25,62 +24,82 @@ class Board(QtGui.QWidget):
 				 self.grid.addWidget(self.coordslist, x + 12, y)
 				 self.grid.addWidget(QtGui.QLabel("Lijn"), 11, 5)
 				 
-		#Tegenstander
+		# Computer veld maken
 		for y in range(1, 11):
 			for x in range(1, 11):
 				coord = (x, y)
 				self.computercoordslist = QtGui.QLabel("(" + str(x) + "," + str(y) + ")")
 				self.grid.addWidget(self.computercoordslist, x, y)
+				
 		#Combobox Horizontaal/Verticaal schip
 		self.horizonverticaalbox = QtGui.QComboBox()
 		self.horizonverticaalbox.addItem("Horizontaal")
 		self.horizonverticaalbox.addItem("Verticaal")
 		self.grid.addWidget(self.horizonverticaalbox, 5, 0)
 		
+		self.plaatsbutton = QtGui.QPushButton("Schipplaatsen", self)
+		self.counter = self.plaatsbutton.clicked.connect(self.counterschepen)
+		self.lijstSchepenGebruiker = self.plaatsbutton.clicked.connect(self.plaatsen)
+		self.grid.addWidget(self.plaatsbutton, 7, 0)
+		
+		
+		
 		self.show()
 		
 	def main(self):
-		while self.lijstSchepenComputer or self.lijstSchepenGebruiker != []:
-			self.shotComputer()
-			self.schietenGebruiker()
+		self.lijstSchepenGebruiker = []
+		if self.counter == 5:
+			self.lijstSchepenComputer = self.schepenComputer()
+			while self.lijstSchepenComputer or self.lijstSchepenGebruiker != []:
+				self.shotComputer()
+				self.schietenGebruiker()
 	
+	def counterschepen(self, counterschepen):
+		self.counter = counterschepen + 1
+		return self.counter
+	
+	def plaatsen(self, counterschepen):
+		counter = counterschepen
+		self.lijstlengtes = [2,3,3,4,5]
+		self.lengteschip = self.lijstlengtes[0] + counter
+		self.lijstSchepenGebruiker = self.schepenGebruiker(self.lengteschip, self.lijstSchepenGebruiker)
+		
 	def beginschip(self, lengte):
-		self.lengte = lengte
-		self.begincoord1, ok = QtGui.QInputDialog.getText(self,'Kies Begincoordinaat', 'Vul hier het begincoordinaat van het schip in welke ' + str(self.lengte) +' coordinaten lang is.')
+		self.lengteschip = lengte
+		self.begincoord1, ok = QtGui.QInputDialog.getText(self,'Kies Begincoordinaat', 'Vul hier het begincoordinaat van het schip in welke ' + str(self.lengteschip) +' coordinaten lang is.')
 		self.begin = str(self.begincoord1).split()
 		x,y = int(self.begin[0]),int(self.begin[1])
 		self.begincoord = (x,y)
-		return self.begincoord, self.lengte
+		return self.begincoord
 		
-	def schepenGebruiker(self):
+	def schepenGebruiker(self, lengte, lijstSchepenGebruiker):
 		# lijst met daarin de lengtes van de schepen waar over je indenteert.
-		self.lijstlengtes = [2,3,3,4,5]
-		lijstSchepenGebruiker = []
-		for item in self.lijstlengtes:
-			self.begincoord, self.lengte = self.beginschip(item)
-			x,y = self.begincoord[0], self.begincoord[1]
-			self.tussencoord = [x,y]
-			counter = 0
-			if self.horizonverticaalbox.currentText() == "Horizontaal":
-				while counter != self.lengte:
-					y = self.tussencoord[1] + counter
-					self.tussencoord1 = (self.tussencoord[0],y)
-					if self.tussencoord1 in lijstSchepenGebruiker:
-						QtGui.QMessageBox.information(self, "Error" , "Je schepen overlopen elkaar voer opnieuw de coordinaten in")
-						self.lijstSchepenGebruiker = self.schepenGebruiker()
-					lijstSchepenGebruiker.append(self.tussencoord1)
-					counter += 1
-			if self.horizonverticaalbox.currentText() == "Verticaal":
-				while counter != self.lengte:
-					y = self.tussencoord[1] + counter
-					self.tussencoord1 = (self.tussencoord[0],y)
-					lijstSchepenGebruiker.append(self.tussencoord1)
-					counter += 1
-					if self.tussencoord1 in lijstSchepenGebruiker:
-						QtGui.QMessageBox.information(self, "Error" , "Je schepen overlopen elkaar voer opnieuw de coordinaten in")
-						self.lijstSchepenGebruiker = self.schepenGebruiker()
-		print(lijstSchepenGebruiker)
-		return lijstSchepenGebruiker
+		self.lijstSchepenGebruiker = lijstSchepenGebruiker
+		self.lengte = lengte
+		self.begincoord = self.beginschip(self.lengte)
+		x,y = self.begincoord[0], self.begincoord[1]
+		self.tussencoord = [x,y]
+		counter = 0
+		if self.horizonverticaalbox.currentText() == "Horizontaal":
+			while counter != self.lengte:
+				y = self.tussencoord[1] + counter
+				self.tussencoord1 = (self.tussencoord[0],y)
+				if self.tussencoord1 in lijstSchepenGebruiker:
+					QtGui.QMessageBox.information(self, "Error" , "Je schepen overlopen elkaar voer opnieuw de coordinaten in")
+					self.lijstSchepenGebruiker = self.schepenGebruiker(self.lengteschip, self.lijstSchepenGebruiker)
+				self.lijstSchepenGebruiker.append(self.tussencoord1)
+				counter += 1
+		if self.horizonverticaalbox.currentText() == "Verticaal":
+			while counter != self.lengte:
+				y = self.tussencoord[1] + counter
+				self.tussencoord1 = (self.tussencoord[0],y)
+				if self.tussencoord1 in lijstSchepenGebruiker:
+					QtGui.QMessageBox.information(self, "Error" , "Je schepen overlopen elkaar voer opnieuw de coordinaten in")
+					self.lijstSchepenGebruiker = self.schepenGebruiker(self.lengteschip, self.lijstSchepenGebruiker)
+				self.lijstSchepenGebruiker.append(self.tussencoord1)
+				counter += 1
+		print(self.lijstSchepenGebruiker)
+		return self.lijstSchepenGebruiker
 		
 	def schepenComputer(self):
 		self.lijstlengtes = [2,3,3,4,5]
