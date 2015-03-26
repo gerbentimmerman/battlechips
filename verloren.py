@@ -1,10 +1,11 @@
 #!/usr/bin/python
 import sys
 from PyQt4 import QtGui, QtCore
+from board import *
 
 class Windowverloren(QtGui.QWidget):
 	def __init__(self):
-		super(Window, self).__init__()
+		super(Windowverloren, self).__init__()
 		self.initUI()
 		
 	def initUI(self):
@@ -48,7 +49,7 @@ class Windowverloren(QtGui.QWidget):
 		
 def main():
 	app = QtGui.QApplication(sys.argv)
-	uni = Window()
+	uni = Windowverloren()
 	sys.exit(app.exec_())
 
 if __name__ == "__main__":
