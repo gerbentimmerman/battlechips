@@ -70,8 +70,6 @@ class Board(QtGui.QWidget):
 						self.lijstSchepenGebruiker = self.schepenGebruiker()
 					lijstSchepenGebruiker.append(self.tussencoord1)
 					counter += 1
-					
-				print(lijstSchepenGebruiker)
 			if self.horizonverticaalbox.currentText() == "Verticaal":
 				while counter != self.lengte:
 					y = self.tussencoord[1] + counter
@@ -81,6 +79,7 @@ class Board(QtGui.QWidget):
 					if self.tussencoord1 in lijstSchepenGebruiker:
 						QtGui.QMessageBox.information(self, "Error" , "Je schepen overlopen elkaar voer opnieuw de coordinaten in")
 						self.lijstSchepenGebruiker = self.schepenGebruiker()
+		print(lijstSchepenGebruiker)
 		return lijstSchepenGebruiker
 		
 	def schepenComputer(self):
@@ -93,32 +92,34 @@ class Board(QtGui.QWidget):
 			hv = randrange(2)
 			if hv == 0:
 				while counter != item:
-					self.begincoordcomputerschip = [x,y + counter]
+					ycoord = y + counter
+					self.begincoordcomputerschip = (x,ycoord)
 					lijstSchepenComputer.append(self.begincoordcomputerschip)
 					counter += 1
-				print(lijstSchepenComputer)
 			if hv == 1:
 				while counter != item:
-					self.begincoordcomputerschip = [x + counter,y]
+					xcoord = x + counter
+					self.begincoordcomputerschip = (x,y)
 					lijstSchepenComputer.append(self.begincoordcomputerschip)
 					counter += 1
+		print(lijstSchepenComputer)
 		return lijstSchepenComputer
 			
 	def randomShotComputer(self):
-		coord = (randrange(10), randrange(10))
-		return coord
+		self.coord = (randrange(10), randrange(10))
+		return self.coord
 				
 	def shotComputer(self):
 		self.randomShot = self.randomShotComputer()
 		coordrij, coordkolom = self.randomShot[0], self.randomShot[1]
 		if self.randomShot in self.lijstSchepenGebruiker:
 			QtGui.QMessageBox.information(self, "Hap!!" , "Ai, de computer heeft een hap van je chipje genomen!")
-			self.grid.addWidget(QtGui.QLabel("x"), coordrij+12, coordkolom)
+			self.grid.addWidget(QtGui.QLabel("iii"), coordrij+12, coordkolom)
 			# kleur rood
-			self.lijstSchepenGebruiker.pop(self.randomShot)
+			self.lijstSchepenGebruiker.remove(self.randomShot)
 		if self.randomShot not in self.lijstSchepenGebruiker:
-			QtGui.QMessageBox.information(self, "Chips!!" , "Oef, de computer miste zijn schot!")
-			self.grid.addWidget(QtGui.QLabel("o"), coordrij, coordkolom)
+			QtGui.QMessageBox.information(self, "Pfiieuw!!" , "Oef, de computer miste zijn schot!")
+			self.grid.addWidget(QtGui.QLabel("o"), coordrij+12, coordkolom)
 			# kleur gemist
 						
 	def schietenGebruiker(self):
@@ -128,12 +129,13 @@ class Board(QtGui.QWidget):
 			QtGui.QMessageBox.information(self, "Hap!!" , "Yess, je hebt een hap van het chipje genomen!")
 			self.grid.addWidget(QtGui.QLabel("x"), coordrij, coordkolom)
 			# kleur Groen
-			self.lijstSchepenComputer.pop(self.coordShotGebruiker)
-		if self.coordShotGebruiker not in self.lijstSchepenComputer:
+			self.lijstSchepenComputer.remove(self.coordShotGebruiker)
+		elif self.coordShotGebruiker not in self.lijstSchepenComputer:
 			QtGui.QMessageBox.information(self, "Chips!!" , "Helaas, je hebt geen schip geraakt!")
-			self.grid.addWidget(QtGui.QLabel("o"), coordrij, coordkolom)
+			self.grid.addWidget(QtGui.QLabel("iii"), coordrij, coordkolom)
 			# Kleur gemist
-
+		print(self.lijstSchepenComputer)
+		
 	def gekozenCoordGebruiker(self):
 		self.schietcoord, ok = QtGui.QInputDialog.getText(self,'Kies Schietcoord', 'Vul hier je schietcoordinaat in met een spatie bijv.: 1 1')
 		self.schietcoord = str(self.schietcoord).split()
