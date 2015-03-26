@@ -8,6 +8,7 @@ from verloren import *
 
 class Board(QtGui.QWidget):
 	def __init__(self):
+		"""Constructor"""
 		super(Board, self).__init__()
 		self.counter = 0
 		self.schiplengtes = [2,3,3,4,5]
@@ -15,6 +16,7 @@ class Board(QtGui.QWidget):
 		self.main(self.schiplengtes)
 	
 	def initUI(self):
+		 """ Window gemaakt met een speelveld"""
 		self.setGeometry(150, 150, 600, 600)
 		self.grid = QtGui.QGridLayout()
 		self.setLayout(self.grid)
@@ -34,32 +36,39 @@ class Board(QtGui.QWidget):
 				self.computercoordslist = QtGui.QLabel("(" + str(x) + "," + str(y) + ")")
 				self.grid.addWidget(self.computercoordslist, x, y)
 				
-		#Combobox Horizontaal/Verticaal schip
+		# Combobox voor keuze Horizontaal/Verticaal richting schip
 		self.horizonverticaalbox = QtGui.QComboBox()
 		self.horizonverticaalbox.addItem("Horizontaal")
 		self.horizonverticaalbox.addItem("Verticaal")
 		self.grid.addWidget(self.horizonverticaalbox, 5, 0)
 		
+		# Knop om schepen plaatsen te bevestigen
 		self.plaatsbutton = QtGui.QPushButton("Schipplaatsen", self)
 		self.lijstSchepenGebruiker = self.plaatsbutton.clicked.connect(self.plaatsen)
 		self.grid.addWidget(self.plaatsbutton, 7, 0)
 		
-		
+		# Knop om schieten te starten als de schepen zijn geplaatst
+		self.schietbutton = QtGui.QPushButton("Start Schieten", self)
+		self.buttonschiet = self.schietbutton.clicked.connect(self.startSchieten)
+		self.grid.addWidget(self.schietbutton, 9, 0)
 		
 		self.show()
 		
 	def main(self, lengtes):
+		""" Lijst van schepen maken en de lengtes van de schepen toewijzen"""
 		self.lijstSchepenGebruiker = []
 		self.schepenlengtes = lengtes
-		if self.schepenlengtes == []:
-			self.lijstSchepenComputer = self.schepenComputer()
-			while self.lijstSchepenComputer or self.lijstSchepenGebruiker != []:
-				self.shotComputer()
-				self.schietenGebruiker()
-			if self.lijstSchepenComputer == []:
-				self.gewonnen = Windowgewonnen()
-			if self.lijstSchepenGebruiker == []:
-				self.verloren = Windowverloren()
+		
+	def startSchieten(self):
+		"""Verloop van het spel wanneer je op de schietknop geklikt hebt"""
+		self.lijstSchepenComputer = self.schepenComputer()
+		while self.lijstSchepenComputer or self.lijstSchepenGebruiker != []:
+			self.shotComputer()
+			self.schietenGebruiker()
+		if self.lijstSchepenComputer == []:
+			self.gewonnen = Windowgewonnen()
+		if self.lijstSchepenGebruiker == []:
+			self.verloren = Windowverloren()
 			
 	
 	def counterschepen(self, counterschepen):
@@ -103,6 +112,7 @@ class Board(QtGui.QWidget):
 				self.tussencoord1 = (x,self.tussencoord[1])
 				if self.tussencoord1 in lijstSchepenGebruiker:
 					QtGui.QMessageBox.information(self, "Error" , "Je schepen overlopen elkaar voer opnieuw de coordinaten in")
+					self.lijstSchepenGebruiker = []
 					self.lijstSchepenGebruiker = self.schepenGebruiker(self.lengteschip, self.lijstSchepenGebruiker)
 				self.lijstSchepenGebruiker.append(self.tussencoord1)
 				self.countercoord += 1
@@ -121,12 +131,18 @@ class Board(QtGui.QWidget):
 				while counter != item:
 					ycoord = y + counter
 					self.begincoordcomputerschip = (x,ycoord)
+					if self.begincoordcomputerschip in lijstSchepenComputer:
+						self.lijstSchepenComputer = []
+						self.lijstSchepenComputer = self.schepenComputer
 					lijstSchepenComputer.append(self.begincoordcomputerschip)
 					counter += 1
 			if hv == 1:
 				while counter != item:
 					xcoord = x + counter
-					self.begincoordcomputerschip = (x,y)
+					self.begincoordcomputerschip = (xcoord,y)
+					if self.begincoordcomputerschip in lijstSchepenComputer:
+						self.lijstSchepenComputer = []
+						self.lijstSchepenComputer = self.schepenComputer
 					lijstSchepenComputer.append(self.begincoordcomputerschip)
 					counter += 1
 		print(lijstSchepenComputer)
