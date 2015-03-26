@@ -3,6 +3,8 @@ import sys
 from PyQt4 import QtGui, QtCore
 from PyQt4.QtGui import QPalette, QBrush, QPixmap
 from board import Board
+from gewonnen import *
+from verloren import *
 
 class Window(QtGui.QWidget):
 	def __init__(self):

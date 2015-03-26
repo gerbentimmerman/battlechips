@@ -1,9 +1,8 @@
 #!/usr/bin/python
 import sys
 from PyQt4 import QtGui, QtCore
-from board import Board
 
-class Window(QtGui.QWidget):
+class Windowgewonnen(QtGui.QWidget):
 	def __init__(self):
 		super(Window, self).__init__()
 		self.initUI()
