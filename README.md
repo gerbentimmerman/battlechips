@@ -18,7 +18,7 @@ zinken, voordat de computer alle schepen van de gebruiker geraakt heeft.
 
 Veel plezier tijdens het spelen!
 
-#############################################################################################
+=====================================================================================================
 
 Documentatie voor Programmeurs:
 
